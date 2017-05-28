@@ -21,7 +21,33 @@
     [super viewDidLoad];
     
     // Create the request.
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://google.com"]];
+//    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://google.com"]];
+
+    /*
+     connection.setDoOutput(true);
+     connection.setDoInput(true);
+     connection.setUseCaches(false);
+     connection.setRequestMethod("GET");
+     connection.setRequestProperty("Accept-Charset", "UTF-8");
+     connection.setRequestProperty("Content-Language", "ru-RU");
+     connection.setRequestProperty("Charset", "UTF-8");
+     connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.2) AppleWebKit/535.7 (KHTML, like Gecko) Chrome/16.0.912.75 Safari/535.7");
+     connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=" + "UTF-8");
+     */
+    
+    NSURL *url = [NSURL URLWithString:@"https://rutracker.cr"];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"GET"];
+    
+    [request setValue:@"UTF-8" forHTTPHeaderField:@"Accept-Charset" ];
+    [request setValue:@"ru-RU" forHTTPHeaderField:@"Content-Language"];
+    [request setValue:@"UTF-8" forHTTPHeaderField:@"Charset"];
+    //[request setValue:@"" forHTTPHeaderField:@""];
+    //[request setValue:@"" forHTTPHeaderField:@""];
+    
+    [request setValue:@"application/x-www-form-urlencoded charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
+    
+
     
     // Create url connection and fire request
 //    NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
@@ -30,9 +56,9 @@
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request                                                completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
                                       {
                                           NSLog(@"completionHandler");
-                                          NSString *myString = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+                                          NSString *myString = [[NSString alloc] initWithData:data encoding:NSWindowsCP1251StringEncoding];
                                           
-                                          NSLog(myString);
+                                          NSLog([myString substringFromIndex:100]);
                                       }];
     [dataTask resume];
     
