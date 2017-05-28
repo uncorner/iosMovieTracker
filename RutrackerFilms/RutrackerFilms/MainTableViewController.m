@@ -11,7 +11,6 @@
 @interface MainTableViewController ()
 
 @property (nonatomic, strong) NSMutableArray *arrayFilms;
-//@property (nonatomic, strong) NSMutableData *responseData;
 
 @end
 
@@ -20,21 +19,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Create the request.
-//    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://google.com"]];
-
-    /*
-     connection.setDoOutput(true);
-     connection.setDoInput(true);
-     connection.setUseCaches(false);
-     connection.setRequestMethod("GET");
-     connection.setRequestProperty("Accept-Charset", "UTF-8");
-     connection.setRequestProperty("Content-Language", "ru-RU");
-     connection.setRequestProperty("Charset", "UTF-8");
-     connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.2) AppleWebKit/535.7 (KHTML, like Gecko) Chrome/16.0.912.75 Safari/535.7");
-     connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=" + "UTF-8");
-     */
-    
     NSURL *url = [NSURL URLWithString:@"https://rutracker.cr"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"GET"];
@@ -42,15 +26,7 @@
     [request setValue:@"UTF-8" forHTTPHeaderField:@"Accept-Charset" ];
     [request setValue:@"ru-RU" forHTTPHeaderField:@"Content-Language"];
     [request setValue:@"UTF-8" forHTTPHeaderField:@"Charset"];
-    //[request setValue:@"" forHTTPHeaderField:@""];
-    //[request setValue:@"" forHTTPHeaderField:@""];
-    
     [request setValue:@"application/x-www-form-urlencoded charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
-    
-
-    
-    // Create url connection and fire request
-//    NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
     
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request                                                completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
@@ -150,43 +126,5 @@
 }
 */
 
-//#pragma mark NSURLConnection Delegate Methods
-//
-//- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-//    // A response has been received, this is where we initialize the instance var you created
-//    // so that we can append data to it in the didReceiveData method
-//    // Furthermore, this method is called each time there is a redirect so reinitializing it
-//    // also serves to clear it
-//    self.responseData = [[NSMutableData alloc] init];
-//}
-//
-//- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-//    // Append the new data to the instance variable you declared
-//    [self.responseData appendData:data];
-//}
-//
-//- (NSCachedURLResponse *)connection:(NSURLConnection *)connection
-//                  willCacheResponse:(NSCachedURLResponse*)cachedResponse {
-//    // Return nil to indicate not necessary to store a cached response for this connection
-//    return nil;
-//}
-//
-//- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-//    // The request is complete and data has been received
-//    // You can parse the stuff in your instance variable now
-//    
-//    NSLog(@"connectionDidFinishLoading");
-//    
-////    NSString *myString = [[NSString alloc] initWithData:self.responseData encoding:NSASCIIStringEncoding];
-////    
-////    NSLog(myString);
-//    
-//}
-//
-//- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-//    // The request has failed for some reason!
-//    // Check the error var
-//}
-//
 
 @end
