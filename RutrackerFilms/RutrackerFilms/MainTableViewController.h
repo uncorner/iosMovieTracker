@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MainTableViewController : UITableViewController<NSURLConnectionDelegate>
+@interface MainTableViewController : UITableViewController
 
 
 
