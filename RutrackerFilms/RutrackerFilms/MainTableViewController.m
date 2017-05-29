@@ -7,6 +7,7 @@
 //
 
 #import "MainTableViewController.h"
+@import HTMLReader;
 
 @interface MainTableViewController ()
 
@@ -19,6 +20,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    // Parse a string and find an element.
+    NSString *markup = @"<p><b>Ahoy there sailor!</b></p>";
+    HTMLDocument *document = [HTMLDocument documentWithString:markup];
+    NSLog(@"%@", [document firstNodeMatchingSelector:@"b"].textContent);
+    // => Ahoy there sailor!
+    
+    /*
     NSURL *url = [NSURL URLWithString:@"https://rutracker.cr"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"GET"];
@@ -37,6 +45,7 @@
                                           NSLog([myString substringFromIndex:100]);
                                       }];
     [dataTask resume];
+     */
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
