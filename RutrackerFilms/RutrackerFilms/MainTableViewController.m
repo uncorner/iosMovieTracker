@@ -21,13 +21,13 @@
     [super viewDidLoad];
     
     // Parse a string and find an element.
-    NSString *markup = @"<p><b>Ahoy there sailor!</b></p>";
-    HTMLDocument *document = [HTMLDocument documentWithString:markup];
-    NSLog(@"%@", [document firstNodeMatchingSelector:@"b"].textContent);
-    // => Ahoy there sailor!
+//    NSString *markup = @"<p><b>Ahoy there sailor!</b></p>";
+//    HTMLDocument *document = [HTMLDocument documentWithString:markup];
+//    NSLog(@"%@", [document firstNodeMatchingSelector:@"b"].textContent);
+//    // => Ahoy there sailor!
     
-    /*
-    NSURL *url = [NSURL URLWithString:@"https://rutracker.cr"];
+    
+    NSURL *url = [NSURL URLWithString:@"https://rutracker.cr/forum/viewforum.php?f=2200"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"GET"];
     
@@ -40,18 +40,47 @@
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request                                                completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
                                       {
                                           NSLog(@"completionHandler");
-                                          NSString *myString = [[NSString alloc] initWithData:data encoding:NSWindowsCP1251StringEncoding];
                                           
-                                          NSLog([myString substringFromIndex:100]);
+                                          NSString *contentType = nil;
+                                          if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+                                              NSDictionary *headers = [(NSHTTPURLResponse *)response allHeaderFields];
+                                              contentType = headers[@"Content-Type"];
+                                          }
+                                          
+                                          //NSString *htmlData = [[NSString alloc] initWithData:data encoding:NSWindowsCP1251StringEncoding];
+                                          
+                                          //NSLog([htmlData substringFromIndex:100]);
+                                          [self parseHtml:data :contentType];
                                       }];
     [dataTask resume];
-     */
+    
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+- (void) parseHtml: (NSData*) data: (NSString*) contentType {
+    NSLog(@"parseHtml");
+    
+    
+//    HTMLDocument *home = [HTMLDocument documentWithData:data
+//                                      contentTypeHeader:contentType];
+//    HTMLElement *div = [home firstNodeMatchingSelector:@".repository-meta-content"];
+//    NSCharacterSet *whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
+//    NSLog(@"%@", [div.textContent stringByTrimmingCharactersInSet:whitespace]);
+//    
+
+    //NSString* contentType = @"";
+    HTMLDocument *doc = [HTMLDocument documentWithData:data
+                                      contentTypeHeader:contentType];
+    
+    //Elements elements = doc.select("#main_content_wrap tr.hl-tr");
+    NSArray<HTMLElement*> *elements = [doc nodesMatchingSelector:@"#main_content_wrap tr.hl-tr"];
+    NSLog(@"elements %i", elements.count);
+    
 }
 
 - (void) viewWillAppear:(BOOL)animated {
