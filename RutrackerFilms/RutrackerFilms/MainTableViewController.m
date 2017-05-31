@@ -57,43 +57,14 @@
 
 - (void) parseHtml: (NSData*) data: (NSString*) contentType {
     NSLog(@"parseHtml");
-    
-    
-//    HTMLDocument *home = [HTMLDocument documentWithData:data
-//                                      contentTypeHeader:contentType];
-//    HTMLElement *div = [home firstNodeMatchingSelector:@".repository-meta-content"];
-//    NSCharacterSet *whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
-//    NSLog(@"%@", [div.textContent stringByTrimmingCharactersInSet:whitespace]);
-//    
-
     HTMLDocument *doc = [HTMLDocument documentWithData:data
                                       contentTypeHeader:contentType];
     
-    //Elements elements = doc.select("#main_content_wrap tr.hl-tr");
     NSArray<HTMLElement*> *elements = [doc nodesMatchingSelector:@"#main_content_wrap tr.hl-tr"];
     NSLog(@"elements %lu", (unsigned long)elements.count);
     
-//    for (int j = 0; j < elements.count; j++) {
-//        
-//
-//    }
-    
     for (id object in elements) {
         HTMLElement * element = (HTMLElement*) object;
-        
-        //Elements torTopicElemets = element.select("td .torTopic a");
-        //NSArray<HTMLElement*> *torTopicElements = [element nodesMatchingSelector:@"td .torTopic a"];
-        //NSLog(@"torTopicElements %lu", (unsigned long)torTopicElements.count);
-        
-        /*
-         if (torTopicElemets.size() > 0) {
-         filmInfo.setName(torTopicElemets.get(0).text());
-         filmInfo.setRelativeUrl(torTopicElemets.get(0).attr("href"));
-         }
-         */
-        
-        //if (torTopicElements.count > 0) {
-        //HTMLElement *torTopicElement =[torTopicElements objectAtIndex:0];
         
         HTMLElement *torTopicElement = [element firstNodeMatchingSelector:@"td .torTopic a"];
         if (torTopicElement != nil)
@@ -104,25 +75,13 @@
             NSLog(@"%@", relativeUrl);
         }
         
-        /*
-         Elements topicAuthorElemets = element.select("td .topicAuthor a");
-         if (topicAuthorElemets.size() > 0) {
-         filmInfo.setTorrentAuthor(topicAuthorElemets.get(0).text());
-         }
-         */
-        
         HTMLElement *topicAuthorElemet = [element firstNodeMatchingSelector:@"td .topicAuthor a"];
-        //[element nodesMatchingSelector:@"td .topicAuthor a"];
         if (topicAuthorElemet != nil) {
             NSString *torrentAuthor = [topicAuthorElemet textContent];
             NSLog(@"%@", torrentAuthor);
-            
         }
-      
-        
     }
     
-    ////
 }
 
 - (void) viewWillAppear:(BOOL)animated {
