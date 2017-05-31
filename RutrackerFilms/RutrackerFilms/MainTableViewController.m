@@ -80,27 +80,42 @@
     
     for (id object in elements) {
         HTMLElement * element = (HTMLElement*) object;
-        //Elements torTopicElemets = element.select("td .torTopic a");
         
-        NSArray<HTMLElement*> *torTopicElements = [element nodesMatchingSelector:@"td .torTopic a"];
-        NSLog(@"torTopicElements %lu", (unsigned long)torTopicElements.count);
+        //Elements torTopicElemets = element.select("td .torTopic a");
+        //NSArray<HTMLElement*> *torTopicElements = [element nodesMatchingSelector:@"td .torTopic a"];
+        //NSLog(@"torTopicElements %lu", (unsigned long)torTopicElements.count);
         
         /*
          if (torTopicElemets.size() > 0) {
          filmInfo.setName(torTopicElemets.get(0).text());
          filmInfo.setRelativeUrl(torTopicElemets.get(0).attr("href"));
          }
-         
+         */
+        
+        //if (torTopicElements.count > 0) {
+        //HTMLElement *torTopicElement =[torTopicElements objectAtIndex:0];
+        
+        HTMLElement *torTopicElement = [element firstNodeMatchingSelector:@"td .torTopic a"];
+        if (torTopicElement != nil)
+        {
+            NSString *name = [torTopicElement textContent];
+            NSLog(@"%@", name);
+            NSString *relativeUrl = [[torTopicElement attributes] objectForKey:@"href"];
+            NSLog(@"%@", relativeUrl);
+        }
+        
+        /*
          Elements topicAuthorElemets = element.select("td .topicAuthor a");
          if (topicAuthorElemets.size() > 0) {
          filmInfo.setTorrentAuthor(topicAuthorElemets.get(0).text());
          }
          */
         
-        if (torTopicElements.count > 0) {
-            HTMLElement *torTopicEl =[torTopicElements objectAtIndex:0];
-            NSString *name = [torTopicEl textContent];
-            NSLog(@"%@", name);
+        HTMLElement *topicAuthorElemet = [element firstNodeMatchingSelector:@"td .topicAuthor a"];
+        //[element nodesMatchingSelector:@"td .topicAuthor a"];
+        if (topicAuthorElemet != nil) {
+            NSString *torrentAuthor = [topicAuthorElemet textContent];
+            NSLog(@"%@", torrentAuthor);
             
         }
       
