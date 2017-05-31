@@ -14,6 +14,6 @@
 @property (nonatomic, strong) NSString *relativeUrl;
 @property (nonatomic, strong) NSString *torrentAuthor;
 
-+ (instancetype) initWithData:(NSString*)name :(NSString*)relativeUrl :(NSString*)torrentAuthor;
++ (instancetype) createWithData:(NSString*)name :(NSString*)relativeUrl :(NSString*)torrentAuthor;
 
 @end

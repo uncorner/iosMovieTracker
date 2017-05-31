@@ -10,7 +10,7 @@
 
 @implementation FilmInfo
 
-+ (instancetype) initWithData:(NSString*)name :(NSString*)relativeUrl :(NSString*)torrentAuthor {
++ (instancetype) createWithData:(NSString*)name :(NSString*)relativeUrl :(NSString*)torrentAuthor {
     FilmInfo* instance = [[FilmInfo alloc] init];
     instance.name = name;
     instance.relativeUrl = relativeUrl;

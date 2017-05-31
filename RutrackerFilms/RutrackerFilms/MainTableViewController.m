@@ -87,7 +87,7 @@
             NSLog(@"%@", torrentAuthor);
         }
         
-        FilmInfo *filmInfo = [FilmInfo initWithData:name :relativeUrl :torrentAuthor];
+        FilmInfo *filmInfo = [FilmInfo createWithData:name :relativeUrl :torrentAuthor];
         [filmInfoItems addObject:filmInfo];
     }
     
