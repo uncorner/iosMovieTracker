@@ -12,7 +12,8 @@
 
 @interface MainTableViewController ()
 
-@property (nonatomic, strong) NSMutableArray *arrayFilms;
+//@property (nonatomic, strong) NSMutableArray *arrayFilms;
+@property (nonatomic, strong) NSMutableArray<FilmInfo*> *_arrayFilms;
 
 @end
 
@@ -45,6 +46,10 @@
                                           
                                           //NSLog([htmlData substringFromIndex:100]);
                                           NSMutableArray<FilmInfo*>* filmInfoItems = [self parseHtml:data :contentType];
+                                          self._arrayFilms = filmInfoItems;
+                                          
+                                          // reload view table
+                                          [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationRight];
                                           
                                           for (FilmInfo* filmInfo in filmInfoItems) {
                                               NSLog(@"--------------");
@@ -52,7 +57,6 @@
                                               NSLog(@"%@", filmInfo.torrentAuthor);
                                               NSLog(@"%@", filmInfo.relativeUrl);
                                           }
-                                          
                                           
                                       }];
     [dataTask resume];
@@ -102,11 +106,23 @@
     return filmInfoItems;
 }
 
-- (void) viewWillAppear:(BOOL)animated {
-    // todo
-    self.arrayFilms = [[NSMutableArray alloc] initWithObjects:@"Джон Вик 2", @"Гадкий Я", @"Рыцарь в доспехах", nil];
-    
-}
+//- (void) viewWillAppear:(BOOL)animated {
+//    // todo
+//    self.arrayFilms = [[NSMutableArray alloc] initWithObjects:@"Джон Вик 2", @"Гадкий Я", @"Рыцарь в доспехах", nil];
+//    
+//}
+
+//- (void) reloadTableViewWhenNewEvent {
+//    
+//    [self.arrayEvents removeAllObjects];
+//    NSArray * array = [[UIApplication sharedApplication] scheduledLocalNotifications];
+//    self.arrayEvents = [[NSMutableArray alloc] initWithArray:array];
+//    
+//    
+//    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+//    
+//}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -122,7 +138,7 @@
 //}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.arrayFilms.count;
+    return self._arrayFilms.count;
 }
 
 
@@ -131,8 +147,10 @@
     NSString * identifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
-    NSString * string = [self.arrayFilms objectAtIndex:indexPath.row];
-    cell.textLabel.text = string;
+    //NSString * string = [self.arrayFilms objectAtIndex:indexPath.row];
+    FilmInfo *filmInfo = [self._arrayFilms objectAtIndex:indexPath.row];
+    
+    cell.textLabel.text = filmInfo.name;
     
     // Configure the cell...
     
