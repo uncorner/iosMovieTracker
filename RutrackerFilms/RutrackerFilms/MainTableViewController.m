@@ -20,13 +20,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Parse a string and find an element.
-//    NSString *markup = @"<p><b>Ahoy there sailor!</b></p>";
-//    HTMLDocument *document = [HTMLDocument documentWithString:markup];
-//    NSLog(@"%@", [document firstNodeMatchingSelector:@"b"].textContent);
-//    // => Ahoy there sailor!
-    
-    
     NSURL *url = [NSURL URLWithString:@"https://rutracker.cr/forum/viewforum.php?f=2200"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"GET"];
@@ -73,17 +66,52 @@
 //    NSLog(@"%@", [div.textContent stringByTrimmingCharactersInSet:whitespace]);
 //    
 
-    //NSString* contentType = @"";
     HTMLDocument *doc = [HTMLDocument documentWithData:data
                                       contentTypeHeader:contentType];
     
     //Elements elements = doc.select("#main_content_wrap tr.hl-tr");
     NSArray<HTMLElement*> *elements = [doc nodesMatchingSelector:@"#main_content_wrap tr.hl-tr"];
-    NSLog(@"elements %i", elements.count);
+    NSLog(@"elements %lu", (unsigned long)elements.count);
     
+//    for (int j = 0; j < elements.count; j++) {
+//        
+//
+//    }
+    
+    for (id object in elements) {
+        HTMLElement * element = (HTMLElement*) object;
+        //Elements torTopicElemets = element.select("td .torTopic a");
+        
+        NSArray<HTMLElement*> *torTopicElements = [element nodesMatchingSelector:@"td .torTopic a"];
+        NSLog(@"torTopicElements %lu", (unsigned long)torTopicElements.count);
+        
+        /*
+         if (torTopicElemets.size() > 0) {
+         filmInfo.setName(torTopicElemets.get(0).text());
+         filmInfo.setRelativeUrl(torTopicElemets.get(0).attr("href"));
+         }
+         
+         Elements topicAuthorElemets = element.select("td .topicAuthor a");
+         if (topicAuthorElemets.size() > 0) {
+         filmInfo.setTorrentAuthor(topicAuthorElemets.get(0).text());
+         }
+         */
+        
+        if (torTopicElements.count > 0) {
+            HTMLElement *torTopicEl =[torTopicElements objectAtIndex:0];
+            NSString *name = [torTopicEl textContent];
+            NSLog(@"%@", name);
+            
+        }
+      
+        
+    }
+    
+    ////
 }
 
 - (void) viewWillAppear:(BOOL)animated {
+    // todo
     self.arrayFilms = [[NSMutableArray alloc] initWithObjects:@"Джон Вик 2", @"Гадкий Я", @"Рыцарь в доспехах", nil];
     
 }
