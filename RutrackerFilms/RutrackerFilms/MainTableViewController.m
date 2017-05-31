@@ -44,7 +44,16 @@
                                           //NSString *htmlData = [[NSString alloc] initWithData:data encoding:NSWindowsCP1251StringEncoding];
                                           
                                           //NSLog([htmlData substringFromIndex:100]);
-                                          [self parseHtml:data :contentType];
+                                          NSMutableArray<FilmInfo*>* filmInfoItems = [self parseHtml:data :contentType];
+                                          
+                                          for (FilmInfo* filmInfo in filmInfoItems) {
+                                              NSLog(@"--------------");
+                                              NSLog(@"%@", filmInfo.name);
+                                              NSLog(@"%@", filmInfo.torrentAuthor);
+                                              NSLog(@"%@", filmInfo.relativeUrl);
+                                          }
+                                          
+                                          
                                       }];
     [dataTask resume];
     
@@ -63,10 +72,9 @@
     NSMutableArray<FilmInfo*> *filmInfoItems = [[NSMutableArray alloc] init];
     
     NSArray<HTMLElement*> *elements = [doc nodesMatchingSelector:@"#main_content_wrap tr.hl-tr"];
-    NSLog(@"elements %lu", (unsigned long)elements.count);
+    //NSLog(@"elements %lu", (unsigned long)elements.count);
     
-    for (id object in elements) {
-        HTMLElement * element = (HTMLElement*) object;
+    for (HTMLElement *element in elements) {
         
         NSString *name = nil;
         NSString *relativeUrl = nil;
@@ -76,15 +84,15 @@
         if (torTopicElement != nil)
         {
             name = [torTopicElement textContent];
-            NSLog(@"%@", name);
+            //NSLog(@"%@", name);
             relativeUrl = [[torTopicElement attributes] objectForKey:@"href"];
-            NSLog(@"%@", relativeUrl);
+            //NSLog(@"%@", relativeUrl);
         }
         
         HTMLElement *topicAuthorElemet = [element firstNodeMatchingSelector:@"td .topicAuthor a"];
         if (topicAuthorElemet != nil) {
             torrentAuthor = [topicAuthorElemet textContent];
-            NSLog(@"%@", torrentAuthor);
+            //NSLog(@"%@", torrentAuthor);
         }
         
         FilmInfo *filmInfo = [FilmInfo createWithData:name :relativeUrl :torrentAuthor];
