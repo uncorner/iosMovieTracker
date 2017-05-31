@@ -7,6 +7,7 @@
 //
 
 #import "MainTableViewController.h"
+#import "FilmInfo.h"
 @import HTMLReader;
 
 @interface MainTableViewController ()
@@ -55,10 +56,11 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
-- (void) parseHtml: (NSData*) data: (NSString*) contentType {
+- (NSMutableArray<FilmInfo*>*) parseHtml: (NSData*)data :(NSString*)contentType {
     NSLog(@"parseHtml");
-    HTMLDocument *doc = [HTMLDocument documentWithData:data
-                                      contentTypeHeader:contentType];
+    HTMLDocument *doc = [HTMLDocument documentWithData:data contentTypeHeader:contentType];
+    
+    NSMutableArray<FilmInfo*> *filmInfoItems = [[NSMutableArray alloc] init];
     
     NSArray<HTMLElement*> *elements = [doc nodesMatchingSelector:@"#main_content_wrap tr.hl-tr"];
     NSLog(@"elements %lu", (unsigned long)elements.count);
@@ -66,22 +68,30 @@
     for (id object in elements) {
         HTMLElement * element = (HTMLElement*) object;
         
+        NSString *name = nil;
+        NSString *relativeUrl = nil;
+        NSString *torrentAuthor = nil;
+        
         HTMLElement *torTopicElement = [element firstNodeMatchingSelector:@"td .torTopic a"];
         if (torTopicElement != nil)
         {
-            NSString *name = [torTopicElement textContent];
+            name = [torTopicElement textContent];
             NSLog(@"%@", name);
-            NSString *relativeUrl = [[torTopicElement attributes] objectForKey:@"href"];
+            relativeUrl = [[torTopicElement attributes] objectForKey:@"href"];
             NSLog(@"%@", relativeUrl);
         }
         
         HTMLElement *topicAuthorElemet = [element firstNodeMatchingSelector:@"td .topicAuthor a"];
         if (topicAuthorElemet != nil) {
-            NSString *torrentAuthor = [topicAuthorElemet textContent];
+            torrentAuthor = [topicAuthorElemet textContent];
             NSLog(@"%@", torrentAuthor);
         }
+        
+        FilmInfo *filmInfo = [FilmInfo initWithData:name :relativeUrl :torrentAuthor];
+        [filmInfoItems addObject:filmInfo];
     }
     
+    return filmInfoItems;
 }
 
 - (void) viewWillAppear:(BOOL)animated {
