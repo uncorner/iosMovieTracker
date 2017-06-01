@@ -50,14 +50,13 @@
                                           NSMutableArray<FilmInfo*>* filmInfoItems = [self parseHtml:data :contentType];
                                           NSLog(@"parseHtml has returned %lu items", (unsigned long)filmInfoItems.count);
                                           
-                                          
-                                          
                                           [self.arrayFilms removeAllObjects];
                                           self.arrayFilms = filmInfoItems;
                                           //[self._arrayFilms addObjectsFromArray:filmInfoItems];
                                           
                                           // reload view table
-                                          [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationRight];
+                                          [self.tableView reloadData];
+                                          [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
                                           NSLog(@"table view was updated");
                                           
 //                                          for (FilmInfo* filmInfo in filmInfoItems) {
