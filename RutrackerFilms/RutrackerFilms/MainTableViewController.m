@@ -58,8 +58,8 @@
                                           NSLog(@"parseHtml has returned %lu items", (unsigned long)filmInfoItems.count);
                                           
                                           [self.arrayFilms removeAllObjects];
-                                          self.arrayFilms = filmInfoItems;
-                                          //[self.arrayFilms addObjectsFromArray:filmInfoItems];
+                                          //self.arrayFilms = filmInfoItems;
+                                          [self.arrayFilms addObjectsFromArray:filmInfoItems];
                                           //self.arrayFilms = [[NSMutableArray<FilmInfo*> alloc] arrayByAddingObjectsFromArray:filmInfoItems];
                                           
                                           // reload view table
