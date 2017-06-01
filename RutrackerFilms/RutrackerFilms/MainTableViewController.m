@@ -24,6 +24,12 @@
     
     //self.tableView.layer.shouldRasterize = YES;
     
+    
+    self.arrayFilms = [[NSMutableArray alloc] init];
+    FilmInfo *loadingItem = [FilmInfo createWithData:@"Data loading..." :nil :nil];
+    [self.arrayFilms addObject:loadingItem];
+    
+    
     NSURL *url = [NSURL URLWithString:@"https://rutracker.cr/forum/viewforum.php?f=2200"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"GET"];
@@ -34,7 +40,8 @@
     [request setValue:@"application/x-www-form-urlencoded charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
     
     NSURLSession *session = [NSURLSession sharedSession];
-    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request                                                completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request
+                                    completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
                                       {
                                           NSLog(@"completionHandler");
                                           
@@ -52,11 +59,12 @@
                                           
                                           [self.arrayFilms removeAllObjects];
                                           self.arrayFilms = filmInfoItems;
-                                          //[self._arrayFilms addObjectsFromArray:filmInfoItems];
+                                          //[self.arrayFilms addObjectsFromArray:filmInfoItems];
+                                          //self.arrayFilms = [[NSMutableArray<FilmInfo*> alloc] arrayByAddingObjectsFromArray:filmInfoItems];
                                           
                                           // reload view table
                                           [self.tableView reloadData];
-                                          [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+                                          //[self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
                                           NSLog(@"table view was updated");
                                           
 //                                          for (FilmInfo* filmInfo in filmInfoItems) {
@@ -121,9 +129,11 @@
 //}
 
 //- (void) viewWillAppear:(BOOL)animated {
-//    self._arrayFilms = [[NSMutableArray alloc] init];
-//    FilmInfo* firstItem = [FilmInfo createWithData:@"Data loading..." :nil :nil];
-//    [self._arrayFilms addObject:firstItem];
+//    
+//    //!!!!!!!!!!!!!
+//    self.arrayFilms = [[NSMutableArray alloc] init];
+//    FilmInfo *loadingItem = [FilmInfo createWithData:@"Data loading..." :nil :nil];
+//    [self.arrayFilms addObject:loadingItem];
 //}
 
 //- (void) reloadTableViewWhenNewEvent {
