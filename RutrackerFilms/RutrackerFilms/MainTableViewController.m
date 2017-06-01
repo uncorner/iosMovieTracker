@@ -13,7 +13,7 @@
 @interface MainTableViewController ()
 
 //@property (nonatomic, strong) NSMutableArray *arrayFilms;
-@property (nonatomic, strong) NSMutableArray<FilmInfo*> *_arrayFilms;
+@property (nonatomic, strong) NSMutableArray<FilmInfo*> *arrayFilms;
 
 @end
 
@@ -21,6 +21,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    //self.tableView.layer.shouldRasterize = YES;
     
     NSURL *url = [NSURL URLWithString:@"https://rutracker.cr/forum/viewforum.php?f=2200"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
@@ -46,17 +48,24 @@
                                           
                                           //NSLog([htmlData substringFromIndex:100]);
                                           NSMutableArray<FilmInfo*>* filmInfoItems = [self parseHtml:data :contentType];
-                                          self._arrayFilms = filmInfoItems;
+                                          NSLog(@"parseHtml has returned %lu items", (unsigned long)filmInfoItems.count);
+                                          
+                                          
+                                          
+                                          [self.arrayFilms removeAllObjects];
+                                          self.arrayFilms = filmInfoItems;
+                                          //[self._arrayFilms addObjectsFromArray:filmInfoItems];
                                           
                                           // reload view table
                                           [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationRight];
+                                          NSLog(@"table view was updated");
                                           
-                                          for (FilmInfo* filmInfo in filmInfoItems) {
-                                              NSLog(@"--------------");
-                                              NSLog(@"%@", filmInfo.name);
-                                              NSLog(@"%@", filmInfo.torrentAuthor);
-                                              NSLog(@"%@", filmInfo.relativeUrl);
-                                          }
+//                                          for (FilmInfo* filmInfo in filmInfoItems) {
+//                                              NSLog(@"--------------");
+//                                              NSLog(@"%@", filmInfo.name);
+//                                              NSLog(@"%@", filmInfo.torrentAuthor);
+//                                              NSLog(@"%@", filmInfo.relativeUrl);
+//                                          }
                                           
                                       }];
     [dataTask resume];
@@ -112,6 +121,12 @@
 //    
 //}
 
+//- (void) viewWillAppear:(BOOL)animated {
+//    self._arrayFilms = [[NSMutableArray alloc] init];
+//    FilmInfo* firstItem = [FilmInfo createWithData:@"Data loading..." :nil :nil];
+//    [self._arrayFilms addObject:firstItem];
+//}
+
 //- (void) reloadTableViewWhenNewEvent {
 //    
 //    [self.arrayEvents removeAllObjects];
@@ -138,7 +153,7 @@
 //}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self._arrayFilms.count;
+    return self.arrayFilms.count;
 }
 
 
@@ -148,9 +163,10 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
     //NSString * string = [self.arrayFilms objectAtIndex:indexPath.row];
-    FilmInfo *filmInfo = [self._arrayFilms objectAtIndex:indexPath.row];
+    FilmInfo *filmInfo = [self.arrayFilms objectAtIndex:indexPath.row];
     
     cell.textLabel.text = filmInfo.name;
+    cell.detailTextLabel.text = filmInfo.torrentAuthor;
     
     // Configure the cell...
     
