@@ -19,19 +19,34 @@
 
 @implementation MainTableViewController
 
-- (void)setArrayByLoadingItem {
-  ;
-    FilmInfo *loadingItem = [FilmInfo createWithData:@"Data loading..." :nil :nil];
-    [self.arrayFilms removeAllObjects];
-    [self.arrayFilms addObject:loadingItem];
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     self.arrayFilms = [[NSMutableArray alloc] init];
-    [self setArrayByLoadingItem];
+    [self updateTableItems];
     
+    // Uncomment the following line to preserve selection between presentations.
+    // self.clearsSelectionOnViewWillAppear = NO;
+    
+    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+- (void) updateTableItems {
+    [self.arrayFilms removeAllObjects];
+    [self setArrayByWaitMessageItem];
+    
+    [self.arrayFilms removeAllObjects];
+    [self makeRequestForLoadingItems];
+}
+
+- (void) setArrayByWaitMessageItem {
+    FilmInfo *loadingItem = [FilmInfo createWithData:@"Data loading..." :nil :nil];
+    [self.arrayFilms addObject:loadingItem];
+}
+
+- (void) makeRequestForLoadingItems {
     NSURL *url = [NSURL URLWithString:@"https://rutracker.cr/forum/viewforum.php?f=2200"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"GET"];
@@ -43,7 +58,7 @@
     
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request
-                                    completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
+                                                completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
                                       {
                                           NSLog(@"completionHandler");
                                           
@@ -58,7 +73,7 @@
                                           
                                           NSLog(@"parseHtml has returned %lu items", (unsigned long)filmInfoItems.count);
                                           
-                                          [self.arrayFilms removeAllObjects];
+                                          //[self.arrayFilms removeAllObjects];
                                           //self.arrayFilms = filmInfoItems;
                                           //self.arrayFilms = [[NSMutableArray<FilmInfo*> alloc] arrayByAddingObjectsFromArray:filmInfoItems];
                                           [self.arrayFilms addObjectsFromArray:filmInfoItems];
@@ -71,13 +86,6 @@
                                           //[self logFilmInfoItems:filmInfoItems];
                                       }];
     [dataTask resume];
-    
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void) logFilmInfoItems:(NSMutableArray<FilmInfo*>*) items {
