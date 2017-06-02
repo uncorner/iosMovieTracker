@@ -151,11 +151,14 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    FilmInfo *filmInfo = [self.arrayFilms objectAtIndex:indexPath.row];
     
     DetailViewController * detailView = [self.storyboard instantiateViewControllerWithIdentifier:@"detailView"];
+    detailView.relativeUrl = filmInfo.relativeUrl;
     
     [self.navigationController pushViewController:detailView animated:YES];
-    
 }
 
 

@@ -10,6 +10,9 @@
 
 @interface DetailViewController : UIViewController
 
+@property (strong, nonatomic) NSString *relativeUrl;
+//@property (weak, nonatomic) UILabel *label1;
+@property (weak, nonatomic) IBOutlet UILabel *label1;
 
 @end
 
