@@ -12,23 +12,24 @@
 
 @interface MainTableViewController ()
 
-//@property (nonatomic, strong) NSMutableArray *arrayFilms;
 @property (nonatomic, strong) NSMutableArray<FilmInfo*> *arrayFilms;
 
 @end
 
 @implementation MainTableViewController
 
+- (void)setArrayByLoadingItem {
+  ;
+    FilmInfo *loadingItem = [FilmInfo createWithData:@"Data loading..." :nil :nil];
+    [self.arrayFilms removeAllObjects];
+    [self.arrayFilms addObject:loadingItem];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    //self.tableView.layer.shouldRasterize = YES;
-    
-    
     self.arrayFilms = [[NSMutableArray alloc] init];
-    FilmInfo *loadingItem = [FilmInfo createWithData:@"Data loading..." :nil :nil];
-    [self.arrayFilms addObject:loadingItem];
-    
+    [self setArrayByLoadingItem];
     
     NSURL *url = [NSURL URLWithString:@"https://rutracker.cr/forum/viewforum.php?f=2200"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
@@ -51,29 +52,20 @@
                                               contentType = headers[@"Content-Type"];
                                           }
                                           
-                                          //NSString *htmlData = [[NSString alloc] initWithData:data encoding:NSWindowsCP1251StringEncoding];
-                                          
-                                          //NSLog([htmlData substringFromIndex:100]);
                                           NSMutableArray<FilmInfo*>* filmInfoItems = [self parseHtml:data :contentType];
                                           NSLog(@"parseHtml has returned %lu items", (unsigned long)filmInfoItems.count);
                                           
                                           [self.arrayFilms removeAllObjects];
                                           //self.arrayFilms = filmInfoItems;
-                                          [self.arrayFilms addObjectsFromArray:filmInfoItems];
                                           //self.arrayFilms = [[NSMutableArray<FilmInfo*> alloc] arrayByAddingObjectsFromArray:filmInfoItems];
+                                          [self.arrayFilms addObjectsFromArray:filmInfoItems];
                                           
                                           // reload view table
                                           [self.tableView reloadData];
                                           //[self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
                                           NSLog(@"table view was updated");
                                           
-//                                          for (FilmInfo* filmInfo in filmInfoItems) {
-//                                              NSLog(@"--------------");
-//                                              NSLog(@"%@", filmInfo.name);
-//                                              NSLog(@"%@", filmInfo.torrentAuthor);
-//                                              NSLog(@"%@", filmInfo.relativeUrl);
-//                                          }
-                                          
+                                          [self logFilmInfoItems:filmInfoItems];
                                       }];
     [dataTask resume];
     
@@ -83,6 +75,15 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+- (void) logFilmInfoItems:(NSMutableArray<FilmInfo*>*) items {
+    for (FilmInfo* filmInfo in items) {
+        NSLog(@"--------------");
+        NSLog(@"%@", filmInfo.name);
+        NSLog(@"%@", filmInfo.torrentAuthor);
+        NSLog(@"%@", filmInfo.relativeUrl);
+    }
 }
 
 - (NSMutableArray<FilmInfo*>*) parseHtml: (NSData*)data :(NSString*)contentType {
@@ -121,31 +122,6 @@
     
     return filmInfoItems;
 }
-
-//- (void) viewWillAppear:(BOOL)animated {
-//    // todo
-//    self.arrayFilms = [[NSMutableArray alloc] initWithObjects:@"Джон Вик 2", @"Гадкий Я", @"Рыцарь в доспехах", nil];
-//    
-//}
-
-//- (void) viewWillAppear:(BOOL)animated {
-//    
-//    //!!!!!!!!!!!!!
-//    self.arrayFilms = [[NSMutableArray alloc] init];
-//    FilmInfo *loadingItem = [FilmInfo createWithData:@"Data loading..." :nil :nil];
-//    [self.arrayFilms addObject:loadingItem];
-//}
-
-//- (void) reloadTableViewWhenNewEvent {
-//    
-//    [self.arrayEvents removeAllObjects];
-//    NSArray * array = [[UIApplication sharedApplication] scheduledLocalNotifications];
-//    self.arrayEvents = [[NSMutableArray alloc] initWithArray:array];
-//    
-//    
-//    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
-//    
-//}
 
 
 - (void)didReceiveMemoryWarning {
