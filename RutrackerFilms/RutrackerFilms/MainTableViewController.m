@@ -9,6 +9,7 @@
 #import "MainTableViewController.h"
 #import "FilmInfo.h"
 #import "ContentParser.h"
+#import "DetailViewController.h"
 
 
 @interface MainTableViewController ()
@@ -128,6 +129,37 @@
     
     return cell;
 }
+
+/*
+(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    UILocalNotification * notification = [self.arrayEvents objectAtIndex:indexPath.row];
+    NSDictionary * dict = notification.userInfo;
+    
+    
+    DetailViewController * detailView = [self.storyboard instantiateViewControllerWithIdentifier:@"detailView"];
+    
+    detailView.eventInfo = [dict objectForKey:@"eventInfo"];
+    detailView.eventDate = notification.fireDate;
+    detailView.isDetail = YES;
+    
+    [self.navigationController pushViewController:detailView animated:YES];
+}
+ */
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    DetailViewController * detailView = [self.storyboard instantiateViewControllerWithIdentifier:@"detailView"];
+    
+    [self.navigationController pushViewController:detailView animated:YES];
+    
+}
+
+
+
 
 
 /*
