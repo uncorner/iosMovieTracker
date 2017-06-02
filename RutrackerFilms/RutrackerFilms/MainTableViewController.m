@@ -34,15 +34,13 @@
 }
 
 - (void) updateTableItems {
-    [self.arrayFilms removeAllObjects];
     [self setArrayByWaitMessageItem];
-    
-    [self.arrayFilms removeAllObjects];
     [self makeRequestForLoadingItems];
 }
 
 - (void) setArrayByWaitMessageItem {
     FilmInfo *loadingItem = [FilmInfo createWithData:@"Data loading..." :nil :nil];
+    [self.arrayFilms removeAllObjects];
     [self.arrayFilms addObject:loadingItem];
 }
 
@@ -73,7 +71,7 @@
                                           
                                           NSLog(@"parseHtml has returned %lu items", (unsigned long)filmInfoItems.count);
                                           
-                                          //[self.arrayFilms removeAllObjects];
+                                          [self.arrayFilms removeAllObjects];
                                           //self.arrayFilms = filmInfoItems;
                                           //self.arrayFilms = [[NSMutableArray<FilmInfo*> alloc] arrayByAddingObjectsFromArray:filmInfoItems];
                                           [self.arrayFilms addObjectsFromArray:filmInfoItems];
