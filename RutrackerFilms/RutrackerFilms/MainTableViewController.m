@@ -8,7 +8,8 @@
 
 #import "MainTableViewController.h"
 #import "FilmInfo.h"
-@import HTMLReader;
+#import "ContentParser.h"
+
 
 @interface MainTableViewController ()
 
@@ -52,7 +53,9 @@
                                               contentType = headers[@"Content-Type"];
                                           }
                                           
-                                          NSMutableArray<FilmInfo*>* filmInfoItems = [self parseHtml:data :contentType];
+                                          ContentParser *parser = [[ContentParser alloc]init];
+                                          NSMutableArray<FilmInfo*>* filmInfoItems = [parser parseFilmList:data :contentType];
+                                          
                                           NSLog(@"parseHtml has returned %lu items", (unsigned long)filmInfoItems.count);
                                           
                                           [self.arrayFilms removeAllObjects];
@@ -65,7 +68,7 @@
                                           //[self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
                                           NSLog(@"table view was updated");
                                           
-                                          [self logFilmInfoItems:filmInfoItems];
+                                          //[self logFilmInfoItems:filmInfoItems];
                                       }];
     [dataTask resume];
     
@@ -85,44 +88,6 @@
         NSLog(@"%@", filmInfo.relativeUrl);
     }
 }
-
-- (NSMutableArray<FilmInfo*>*) parseHtml: (NSData*)data :(NSString*)contentType {
-    NSLog(@"parseHtml");
-    HTMLDocument *doc = [HTMLDocument documentWithData:data contentTypeHeader:contentType];
-    
-    NSMutableArray<FilmInfo*> *filmInfoItems = [[NSMutableArray alloc] init];
-    
-    NSArray<HTMLElement*> *elements = [doc nodesMatchingSelector:@"#main_content_wrap tr.hl-tr"];
-    //NSLog(@"elements %lu", (unsigned long)elements.count);
-    
-    for (HTMLElement *element in elements) {
-        
-        NSString *name = nil;
-        NSString *relativeUrl = nil;
-        NSString *torrentAuthor = nil;
-        
-        HTMLElement *torTopicElement = [element firstNodeMatchingSelector:@"td .torTopic a"];
-        if (torTopicElement != nil)
-        {
-            name = [torTopicElement textContent];
-            //NSLog(@"%@", name);
-            relativeUrl = [[torTopicElement attributes] objectForKey:@"href"];
-            //NSLog(@"%@", relativeUrl);
-        }
-        
-        HTMLElement *topicAuthorElemet = [element firstNodeMatchingSelector:@"td .topicAuthor a"];
-        if (topicAuthorElemet != nil) {
-            torrentAuthor = [topicAuthorElemet textContent];
-            //NSLog(@"%@", torrentAuthor);
-        }
-        
-        FilmInfo *filmInfo = [FilmInfo createWithData:name :relativeUrl :torrentAuthor];
-        [filmInfoItems addObject:filmInfo];
-    }
-    
-    return filmInfoItems;
-}
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

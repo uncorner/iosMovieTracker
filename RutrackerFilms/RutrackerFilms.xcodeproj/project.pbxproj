@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		92583E241EE1B1A600F358A6 /* ContentParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 92583E231EE1B1A600F358A6 /* ContentParser.m */; };
 		92743EDA1EDF4C3400DDC4CF /* FilmInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 92743ED91EDF4C3400DDC4CF /* FilmInfo.m */; };
 		92DCACAD1EDC76BF005E2EE4 /* HTMLReader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92DCAC981EDC76A1005E2EE4 /* HTMLReader.framework */; };
 		92EBA2881ED5B0350008280C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 92EBA2871ED5B0350008280C /* main.m */; };
@@ -107,6 +108,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		92583E221EE1B1A600F358A6 /* ContentParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentParser.h; sourceTree = "<group>"; };
+		92583E231EE1B1A600F358A6 /* ContentParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContentParser.m; sourceTree = "<group>"; };
 		92743ED81EDF4C3400DDC4CF /* FilmInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilmInfo.h; sourceTree = "<group>"; };
 		92743ED91EDF4C3400DDC4CF /* FilmInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilmInfo.m; sourceTree = "<group>"; };
 		92DCAC891EDC76A1005E2EE4 /* HTMLReader.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = HTMLReader.xcodeproj; path = HTMLReader/HTMLReader.xcodeproj; sourceTree = "<group>"; };
@@ -199,6 +202,8 @@
 				92EBA2AC1ED5BE660008280C /* MainTableViewController.m */,
 				92743ED81EDF4C3400DDC4CF /* FilmInfo.h */,
 				92743ED91EDF4C3400DDC4CF /* FilmInfo.m */,
+				92583E221EE1B1A600F358A6 /* ContentParser.h */,
+				92583E231EE1B1A600F358A6 /* ContentParser.m */,
 			);
 			path = RutrackerFilms;
 			sourceTree = "<group>";
@@ -410,6 +415,7 @@
 			files = (
 				92743EDA1EDF4C3400DDC4CF /* FilmInfo.m in Sources */,
 				92EBA2AD1ED5BE670008280C /* MainTableViewController.m in Sources */,
+				92583E241EE1B1A600F358A6 /* ContentParser.m in Sources */,
 				92EBA28E1ED5B0350008280C /* DetailViewController.m in Sources */,
 				92EBA28B1ED5B0350008280C /* AppDelegate.m in Sources */,
 				92EBA2881ED5B0350008280C /* main.m in Sources */,
