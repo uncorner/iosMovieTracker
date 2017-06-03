@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9246FD571EE2EBD90098A149 /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 9246FD561EE2EBD90098A149 /* Common.m */; };
 		92583E241EE1B1A600F358A6 /* ContentParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 92583E231EE1B1A600F358A6 /* ContentParser.m */; };
 		92743EDA1EDF4C3400DDC4CF /* FilmInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 92743ED91EDF4C3400DDC4CF /* FilmInfo.m */; };
 		92DCACAD1EDC76BF005E2EE4 /* HTMLReader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92DCAC981EDC76A1005E2EE4 /* HTMLReader.framework */; };
@@ -108,6 +109,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9246FD551EE2EBD90098A149 /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Common.h; path = ../Common.h; sourceTree = "<group>"; };
+		9246FD561EE2EBD90098A149 /* Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Common.m; path = ../Common.m; sourceTree = "<group>"; };
 		92583E221EE1B1A600F358A6 /* ContentParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentParser.h; sourceTree = "<group>"; };
 		92583E231EE1B1A600F358A6 /* ContentParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContentParser.m; sourceTree = "<group>"; };
 		92743ED81EDF4C3400DDC4CF /* FilmInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilmInfo.h; sourceTree = "<group>"; };
@@ -188,6 +191,8 @@
 		92EBA2851ED5B0350008280C /* RutrackerFilms */ = {
 			isa = PBXGroup;
 			children = (
+				9246FD551EE2EBD90098A149 /* Common.h */,
+				9246FD561EE2EBD90098A149 /* Common.m */,
 				92DCAC891EDC76A1005E2EE4 /* HTMLReader.xcodeproj */,
 				92EBA2891ED5B0350008280C /* AppDelegate.h */,
 				92EBA28A1ED5B0350008280C /* AppDelegate.m */,
@@ -419,6 +424,7 @@
 				92EBA28E1ED5B0350008280C /* DetailViewController.m in Sources */,
 				92EBA28B1ED5B0350008280C /* AppDelegate.m in Sources */,
 				92EBA2881ED5B0350008280C /* main.m in Sources */,
+				9246FD571EE2EBD90098A149 /* Common.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -30,7 +30,8 @@
         {
             name = [torTopicElement textContent];
             //NSLog(@"%@", name);
-            relativeUrl = [[torTopicElement attributes] objectForKey:@"href"];
+            NSString *partUrl = [[torTopicElement attributes] objectForKey:@"href"];
+            relativeUrl = [@"forum/" stringByAppendingString:partUrl];
             //NSLog(@"%@", relativeUrl);
         }
         

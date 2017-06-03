@@ -7,6 +7,7 @@
 //
 
 #import "DetailViewController.h"
+#import "Common.h"
 
 @interface DetailViewController ()
 
@@ -18,9 +19,18 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    self.label1.text = self.relativeUrl;
+    NSMutableString *s = [[NSMutableString alloc]init];
+    [s appendString:WebsiteUrl];
+    [s appendString:@"/"];
+    [s appendString:self.relativeUrl];
     
+    NSURL *url = [NSURL URLWithString:s];
     
+    self.label1.text = url.absoluteString;
+    
+    self.webView.scalesPageToFit = YES;
+    self.webView.contentMode = UIViewContentModeScaleAspectFit;
+    [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
 }
 
 
