@@ -52,6 +52,7 @@ NSInteger const MaxTitleLenght = 12;
     [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
 }
 
+
 //+ (NSInteger) MaxTitleLenght {
 //    return 12;
 //}
