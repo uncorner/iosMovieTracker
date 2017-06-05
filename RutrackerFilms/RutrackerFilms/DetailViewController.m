@@ -11,28 +11,50 @@
 
 @interface DetailViewController ()
 
+
 @end
 
 @implementation DetailViewController
+
+NSInteger const MaxTitleLenght = 12;
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    NSMutableString *s = [[NSMutableString alloc]init];
-    [s appendString:WebsiteUrl];
-    [s appendString:@"/"];
-    [s appendString:self.relativeUrl];
+    self.navigationController.navigationBar.topItem.backBarButtonItem = [[UIBarButtonItem alloc]
+                                                                         initWithTitle:@"Back"
+                                                                         style:UIBarButtonItemStylePlain
+                                                                         target:nil action:nil];
+    //self.navigationController.navigationItem.title = @"123";
+    //self.navigationController.navigationBar.topItem.title = @"123";
     
-    NSURL *url = [NSURL URLWithString:s];
+    NSString *shortName = [NSString stringWithString:self.name];
+    if (shortName.length > MaxTitleLenght) {
+        shortName = [NSString stringWithString:[self.name substringToIndex:MaxTitleLenght]];
+        shortName = [shortName stringByAppendingString:@"..."];
+    }
     
-    self.label1.text = url.absoluteString;
+    [self setTitle: shortName];
+    
+    NSMutableString *stringUrl = [[NSMutableString alloc]init];
+    [stringUrl appendString:WebsiteUrl];
+    [stringUrl appendString:@"/"];
+    [stringUrl appendString:self.relativeUrl];
+    
+    NSURL *url = [NSURL URLWithString:stringUrl];
+    
+    //self.label1.text = url.absoluteString;
     
     self.webView.scalesPageToFit = YES;
     self.webView.contentMode = UIViewContentModeScaleAspectFit;
     [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
 }
 
+//+ (NSInteger) MaxTitleLenght {
+//    return 12;
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

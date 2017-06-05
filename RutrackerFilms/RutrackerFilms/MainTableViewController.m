@@ -119,13 +119,10 @@
     NSString * identifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
-    //NSString * string = [self.arrayFilms objectAtIndex:indexPath.row];
     FilmInfo *filmInfo = [self.arrayFilms objectAtIndex:indexPath.row];
     
     cell.textLabel.text = filmInfo.name;
     cell.detailTextLabel.text = filmInfo.torrentAuthor;
-    
-    // Configure the cell...
     
     return cell;
 }
@@ -157,6 +154,7 @@
     
     DetailViewController * detailView = [self.storyboard instantiateViewControllerWithIdentifier:@"detailView"];
     detailView.relativeUrl = filmInfo.relativeUrl;
+    detailView.name = filmInfo.name;
     
     [self.navigationController pushViewController:detailView animated:YES];
 }
