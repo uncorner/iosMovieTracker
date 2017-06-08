@@ -10,6 +10,6 @@
 
 @implementation Common
 
-NSString *WebsiteUrl = @"https://rutracker.cr";
+NSString *WebsiteUrl = @"http://xn--e1aaowadjh.org";
 
 @end

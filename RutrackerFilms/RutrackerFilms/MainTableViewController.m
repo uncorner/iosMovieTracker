@@ -10,6 +10,7 @@
 #import "FilmInfo.h"
 #import "ContentParser.h"
 #import "DetailViewController.h"
+#import "Common.h"
 
 
 @interface MainTableViewController ()
@@ -46,7 +47,10 @@
 }
 
 - (void) makeRequestForLoadingItems {
-    NSURL *url = [NSURL URLWithString:@"https://rutracker.cr/forum/viewforum.php?f=2200"];
+    NSMutableString *stringUrl = [NSMutableString stringWithString:WebsiteUrl];
+    [stringUrl appendString:@"/forum/viewforum.php?f=2200"];
+    
+    NSURL *url = [NSURL URLWithString:stringUrl];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"GET"];
     
