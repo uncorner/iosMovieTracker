@@ -65,6 +65,16 @@
                                       {
                                           NSLog(@"completionHandler");
                                           
+                                          if (error) {
+                                              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Ошибка загрузки"
+                                                                                              message:[NSString stringWithFormat:@"%@: %@", error.localizedFailureReason, error.localizedDescription]
+                                                                                             delegate:self
+                                                                                    cancelButtonTitle:@"Accept"
+                                                                                    otherButtonTitles:nil];
+                                              [alert show];
+                                              return;
+                                          }
+                                          
                                           NSString *contentType = nil;
                                           if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
                                               NSDictionary *headers = [(NSHTTPURLResponse *)response allHeaderFields];
