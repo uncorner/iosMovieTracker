@@ -135,8 +135,15 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
     FilmInfo *filmInfo = [self.arrayFilms objectAtIndex:indexPath.row];
     
+    
     cell.textLabel.text = filmInfo.name;
-    cell.detailTextLabel.text = filmInfo.torrentAuthor;
+    
+    if (filmInfo.torrentAuthor != nil) {
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"[%@]", filmInfo.torrentAuthor];
+    }
+    else {
+        cell.detailTextLabel.text = nil;
+    }
     
     return cell;
 }
