@@ -15,6 +15,15 @@
     instance.name = name;
     instance.relativeUrl = relativeUrl;
     instance.torrentAuthor = torrentAuthor;
+    instance.isServiceMessage = NO;
+    
+    return instance;
+}
+
++ (instancetype) createServiceMessage:(NSString*) message {
+    FilmInfo* instance = [[FilmInfo alloc] init];
+    instance.name = message;
+    instance.isServiceMessage = YES;
     
     return instance;
 }

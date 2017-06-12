@@ -42,7 +42,7 @@
 }
 
 - (void) setArrayByWaitMessageItem {
-    FilmInfo *loadingItem = [FilmInfo createWithData:@"Data loading..." :nil :nil];
+    FilmInfo *loadingItem = [FilmInfo createServiceMessage:@"Data loading..."];
     [self.arrayFilms removeAllObjects];
     [self.arrayFilms addObject:loadingItem];
 }
@@ -155,11 +155,14 @@
     
     cell.nameLabel.text = filmInfo.name;
     
-    if (filmInfo.torrentAuthor != nil) {
+    if (! filmInfo.isServiceMessage) {
         cell.authorLabel.text = [NSString stringWithFormat:@"[%@]", filmInfo.torrentAuthor];
+        cell.posterImage.hidden = NO;
+        
     }
     else {
         cell.authorLabel.text = nil;
+        cell.posterImage.hidden = YES;
     }
     
     //cell.imgPoster.image = [UIImageimageNamed:movie.poster];
