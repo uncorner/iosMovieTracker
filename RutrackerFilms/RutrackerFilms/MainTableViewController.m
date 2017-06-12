@@ -11,6 +11,7 @@
 #import "ContentParser.h"
 #import "DetailViewController.h"
 #import "Common.h"
+#import "FilmTableViewCell.h"
 
 
 @interface MainTableViewController ()
@@ -130,20 +131,39 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSString * identifier = @"Cell";
+//    NSString * identifier = @"Cell";
+//    
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
+//    FilmInfo *filmInfo = [self.arrayFilms objectAtIndex:indexPath.row];
+//    
+//    
+//    cell.textLabel.text = filmInfo.name;
+//    
+//    if (filmInfo.torrentAuthor != nil) {
+//        cell.detailTextLabel.text = [NSString stringWithFormat:@"[%@]", filmInfo.torrentAuthor];
+//    }
+//    else {
+//        cell.detailTextLabel.text = nil;
+//    }
+//    
+//    return cell;
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
+    static NSString *cellIdentifier = @"TorrentCell";
+    
+    //MoviesTableViewCell *cell = [tableViewdequeueReusableCellWithIdentifier:cellIdentifierforIndexPath:indexPath];
+    FilmTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+    //Movie *movie = (self.marrMovies)[indexPath.row];
     FilmInfo *filmInfo = [self.arrayFilms objectAtIndex:indexPath.row];
-    
-    
-    cell.textLabel.text = filmInfo.name;
+    cell.nameLabel.text = filmInfo.name;
     
     if (filmInfo.torrentAuthor != nil) {
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"[%@]", filmInfo.torrentAuthor];
+        cell.authorLabel.text = [NSString stringWithFormat:@"[%@]", filmInfo.torrentAuthor];
     }
     else {
-        cell.detailTextLabel.text = nil;
+        cell.authorLabel.text = nil;
     }
+    
+    //cell.imgPoster.image = [UIImageimageNamed:movie.poster];
     
     return cell;
 }
