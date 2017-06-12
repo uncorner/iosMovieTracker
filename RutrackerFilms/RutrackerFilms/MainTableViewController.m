@@ -150,10 +150,9 @@
     
     static NSString *cellIdentifier = @"TorrentCell";
     
-    //MoviesTableViewCell *cell = [tableViewdequeueReusableCellWithIdentifier:cellIdentifierforIndexPath:indexPath];
     FilmTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-    //Movie *movie = (self.marrMovies)[indexPath.row];
     FilmInfo *filmInfo = [self.arrayFilms objectAtIndex:indexPath.row];
+    
     cell.nameLabel.text = filmInfo.name;
     
     if (filmInfo.torrentAuthor != nil) {
