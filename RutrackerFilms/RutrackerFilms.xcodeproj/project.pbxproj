@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9246FD571EE2EBD90098A149 /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 9246FD561EE2EBD90098A149 /* Common.m */; };
+		9247EC821EF04373008B1E31 /* no_poster.png in Resources */ = {isa = PBXBuildFile; fileRef = 9247EC811EF04373008B1E31 /* no_poster.png */; };
 		92583E241EE1B1A600F358A6 /* ContentParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 92583E231EE1B1A600F358A6 /* ContentParser.m */; };
 		92743EDA1EDF4C3400DDC4CF /* FilmInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 92743ED91EDF4C3400DDC4CF /* FilmInfo.m */; };
 		92D790651EEDB67F00821CA1 /* FilmTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 92D790641EEDB67F00821CA1 /* FilmTableViewCell.m */; };
@@ -112,6 +113,7 @@
 /* Begin PBXFileReference section */
 		9246FD551EE2EBD90098A149 /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Common.h; path = ../Common.h; sourceTree = "<group>"; };
 		9246FD561EE2EBD90098A149 /* Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Common.m; path = ../Common.m; sourceTree = "<group>"; };
+		9247EC811EF04373008B1E31 /* no_poster.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = no_poster.png; path = RutrackerFilms/Images/no_poster.png; sourceTree = "<group>"; };
 		92583E221EE1B1A600F358A6 /* ContentParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentParser.h; sourceTree = "<group>"; };
 		92583E231EE1B1A600F358A6 /* ContentParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContentParser.m; sourceTree = "<group>"; };
 		92743ED81EDF4C3400DDC4CF /* FilmInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilmInfo.h; sourceTree = "<group>"; };
@@ -155,6 +157,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9247EC711EF03FE9008B1E31 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				9247EC811EF04373008B1E31 /* no_poster.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
 		92DCAC8A1EDC76A1005E2EE4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -176,6 +186,7 @@
 		92EBA27A1ED5B0350008280C = {
 			isa = PBXGroup;
 			children = (
+				9247EC711EF03FE9008B1E31 /* Images */,
 				92EBA2851ED5B0350008280C /* RutrackerFilms */,
 				92EBA29F1ED5B0360008280C /* RutrackerFilmsTests */,
 				92EBA2841ED5B0350008280C /* Products */,
@@ -404,6 +415,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				92EBA2961ED5B0350008280C /* LaunchScreen.storyboard in Resources */,
+				9247EC821EF04373008B1E31 /* no_poster.png in Resources */,
 				92EBA2931ED5B0350008280C /* Assets.xcassets in Resources */,
 				92EBA2911ED5B0350008280C /* Main.storyboard in Resources */,
 			);

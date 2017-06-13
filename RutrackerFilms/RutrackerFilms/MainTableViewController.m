@@ -159,6 +159,9 @@
         cell.authorLabel.text = [NSString stringWithFormat:@"[%@]", filmInfo.torrentAuthor];
         cell.posterImage.hidden = NO;
         
+        UIImage *image = [UIImage imageNamed: @"no_poster.png"];
+        cell.posterImage.image = image;
+        
     }
     else {
         cell.authorLabel.text = nil;
