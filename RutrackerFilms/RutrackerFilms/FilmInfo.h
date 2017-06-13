@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
 
 @interface FilmInfo : NSObject
 
@@ -14,8 +16,10 @@
 @property (nonatomic, strong) NSString *relativeUrl;
 @property (nonatomic, strong) NSString *torrentAuthor;
 @property (nonatomic, assign) BOOL isServiceMessage;
+@property (nonatomic, strong) NSString *posterUrl;
+@property (nonatomic, strong) UIImage *posterImage;
 
 + (instancetype) createWithData:(NSString*)name :(NSString*)relativeUrl :(NSString*)torrentAuthor;
-+ (instancetype) createServiceMessage:(NSString*) message;
++ (instancetype) createAsServiceMessage:(NSString*) message;
 
 @end

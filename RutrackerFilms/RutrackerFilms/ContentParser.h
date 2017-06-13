@@ -13,6 +13,7 @@
 
 @interface ContentParser : NSObject
 
-- (NSMutableArray<FilmInfo*>*) parseFilmList: (NSData*)data :(NSString*)contentType;
+- (NSMutableArray<FilmInfo*>*) parseFilmListFromHtml:(NSData*)htmlData contentType:(NSString*)contentType;
+- (NSString*) parsePosterUrlFromHtml:(NSData*)htmlData contentType:(NSString*)contentType;
 
 @end

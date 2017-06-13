@@ -20,7 +20,7 @@
     return instance;
 }
 
-+ (instancetype) createServiceMessage:(NSString*) message {
++ (instancetype) createAsServiceMessage:(NSString*) message {
     FilmInfo* instance = [[FilmInfo alloc] init];
     instance.name = message;
     instance.isServiceMessage = YES;

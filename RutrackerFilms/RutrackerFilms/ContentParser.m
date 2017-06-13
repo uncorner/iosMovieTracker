@@ -10,9 +10,9 @@
 
 @implementation ContentParser
 
-- (NSMutableArray<FilmInfo*>*) parseFilmList: (NSData*)data :(NSString*)contentType {
+- (NSMutableArray<FilmInfo*>*) parseFilmListFromHtml:(NSData*)htmlData contentType:(NSString*)contentType {
     NSLog(@"parseHtml");
-    HTMLDocument *doc = [HTMLDocument documentWithData:data contentTypeHeader:contentType];
+    HTMLDocument *doc = [HTMLDocument documentWithData:htmlData contentTypeHeader:contentType];
     
     NSMutableArray<FilmInfo*> *filmInfoItems = [[NSMutableArray alloc] init];
     
@@ -46,6 +46,19 @@
     }
     
     return filmInfoItems;
+}
+
+- (NSString*) parsePosterUrlFromHtml:(NSData*)htmlData contentType:(NSString*)contentType {
+    NSLog(@"parsePosterUrl");
+    
+    HTMLDocument *doc = [HTMLDocument documentWithData:htmlData contentTypeHeader:contentType];
+    HTMLElement *element = [doc firstNodeMatchingSelector:@"#main_content .topic .post_wrap img.postImg"];
+    if (element != nil) {
+        NSString *url = [[element attributes] objectForKey:@"src"];
+        return url;
+    }
+    
+    return nil;
 }
 
 

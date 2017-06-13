@@ -44,7 +44,7 @@
 }
 
 - (void) setArrayByWaitMessageItem {
-    FilmInfo *loadingItem = [FilmInfo createServiceMessage:@"Data loading..."];
+    FilmInfo *loadingItem = [FilmInfo createAsServiceMessage:@"Data loading..."];
     [arrayFilms removeAllObjects];
     [arrayFilms addObject:loadingItem];
 }
@@ -85,7 +85,7 @@
                                           }
                                           
                                           ContentParser *parser = [[ContentParser alloc]init];
-                                          NSMutableArray<FilmInfo*>* filmInfoItems = [parser parseFilmList:data :contentType];
+                                          NSMutableArray<FilmInfo*>* filmInfoItems = [parser parseFilmListFromHtml:data contentType:contentType];
                                           
                                           NSLog(@"parseHtml has returned %lu items", (unsigned long)filmInfoItems.count);
                                           
