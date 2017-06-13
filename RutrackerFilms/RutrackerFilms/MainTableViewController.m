@@ -15,8 +15,10 @@
 
 
 @interface MainTableViewController ()
+{
+    NSMutableArray<FilmInfo*> *arrayFilms;
+}
 
-@property (nonatomic, strong) NSMutableArray<FilmInfo*> *arrayFilms;
 
 @end
 
@@ -26,7 +28,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.arrayFilms = [[NSMutableArray alloc] init];
+    arrayFilms = [[NSMutableArray alloc] init];
     [self updateTableItems];
     
     // Uncomment the following line to preserve selection between presentations.
@@ -43,8 +45,8 @@
 
 - (void) setArrayByWaitMessageItem {
     FilmInfo *loadingItem = [FilmInfo createServiceMessage:@"Data loading..."];
-    [self.arrayFilms removeAllObjects];
-    [self.arrayFilms addObject:loadingItem];
+    [arrayFilms removeAllObjects];
+    [arrayFilms addObject:loadingItem];
 }
 
 - (void) makeRequestForLoadingItems {
@@ -87,10 +89,10 @@
                                           
                                           NSLog(@"parseHtml has returned %lu items", (unsigned long)filmInfoItems.count);
                                           
-                                          [self.arrayFilms removeAllObjects];
+                                          [arrayFilms removeAllObjects];
                                           //self.arrayFilms = filmInfoItems;
                                           //self.arrayFilms = [[NSMutableArray<FilmInfo*> alloc] arrayByAddingObjectsFromArray:filmInfoItems];
-                                          [self.arrayFilms addObjectsFromArray:filmInfoItems];
+                                          [arrayFilms addObjectsFromArray:filmInfoItems];
                                           
                                           // reload view table
                                           [self.tableView reloadData];
@@ -125,33 +127,15 @@
 //}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.arrayFilms.count;
+    return arrayFilms.count;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-//    NSString * identifier = @"Cell";
-//    
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
-//    FilmInfo *filmInfo = [self.arrayFilms objectAtIndex:indexPath.row];
-//    
-//    
-//    cell.textLabel.text = filmInfo.name;
-//    
-//    if (filmInfo.torrentAuthor != nil) {
-//        cell.detailTextLabel.text = [NSString stringWithFormat:@"[%@]", filmInfo.torrentAuthor];
-//    }
-//    else {
-//        cell.detailTextLabel.text = nil;
-//    }
-//    
-//    return cell;
-    
     static NSString *cellIdentifier = @"TorrentCell";
     
     FilmTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-    FilmInfo *filmInfo = [self.arrayFilms objectAtIndex:indexPath.row];
+    FilmInfo *filmInfo = [arrayFilms objectAtIndex:indexPath.row];
     
     cell.nameLabel.text = filmInfo.name;
     
@@ -168,7 +152,7 @@
         cell.posterImage.hidden = YES;
     }
     
-    //cell.imgPoster.image = [UIImageimageNamed:movie.poster];
+    //cell.imgPoster.image = [UIImage imageNamed:movie.poster];
     
     return cell;
 }
@@ -196,7 +180,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    FilmInfo *filmInfo = [self.arrayFilms objectAtIndex:indexPath.row];
+    FilmInfo *filmInfo = [arrayFilms objectAtIndex:indexPath.row];
     
     DetailViewController * detailView = [self.storyboard instantiateViewControllerWithIdentifier:@"detailView"];
     detailView.relativeUrl = filmInfo.relativeUrl;
