@@ -11,6 +11,7 @@
 		9247EC821EF04373008B1E31 /* no_poster.png in Resources */ = {isa = PBXBuildFile; fileRef = 9247EC811EF04373008B1E31 /* no_poster.png */; };
 		92583E241EE1B1A600F358A6 /* ContentParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 92583E231EE1B1A600F358A6 /* ContentParser.m */; };
 		92743EDA1EDF4C3400DDC4CF /* FilmInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 92743ED91EDF4C3400DDC4CF /* FilmInfo.m */; };
+		929F7D991EF2FFDF005A8787 /* ContentParserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 929F7D981EF2FFDF005A8787 /* ContentParserTests.m */; };
 		92D790651EEDB67F00821CA1 /* FilmTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 92D790641EEDB67F00821CA1 /* FilmTableViewCell.m */; };
 		92DCACAD1EDC76BF005E2EE4 /* HTMLReader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92DCAC981EDC76A1005E2EE4 /* HTMLReader.framework */; };
 		92EBA2881ED5B0350008280C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 92EBA2871ED5B0350008280C /* main.m */; };
@@ -118,6 +119,7 @@
 		92583E231EE1B1A600F358A6 /* ContentParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContentParser.m; sourceTree = "<group>"; };
 		92743ED81EDF4C3400DDC4CF /* FilmInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilmInfo.h; sourceTree = "<group>"; };
 		92743ED91EDF4C3400DDC4CF /* FilmInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilmInfo.m; sourceTree = "<group>"; };
+		929F7D981EF2FFDF005A8787 /* ContentParserTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContentParserTests.m; sourceTree = "<group>"; };
 		92D790631EEDB67F00821CA1 /* FilmTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilmTableViewCell.h; sourceTree = "<group>"; };
 		92D790641EEDB67F00821CA1 /* FilmTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilmTableViewCell.m; sourceTree = "<group>"; };
 		92DCAC891EDC76A1005E2EE4 /* HTMLReader.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = HTMLReader.xcodeproj; path = HTMLReader/HTMLReader.xcodeproj; sourceTree = "<group>"; };
@@ -242,6 +244,7 @@
 			children = (
 				92EBA2A01ED5B0360008280C /* RutrackerFilmsTests.m */,
 				92EBA2A21ED5B0360008280C /* Info.plist */,
+				929F7D981EF2FFDF005A8787 /* ContentParserTests.m */,
 			);
 			path = RutrackerFilmsTests;
 			sourceTree = "<group>";
@@ -450,6 +453,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				929F7D991EF2FFDF005A8787 /* ContentParserTests.m in Sources */,
 				92EBA2A11ED5B0360008280C /* RutrackerFilmsTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
