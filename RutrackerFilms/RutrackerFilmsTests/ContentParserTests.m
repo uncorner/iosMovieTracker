@@ -38,8 +38,7 @@
     ContentParser *parser = [[ContentParser alloc] init];
     NSString* imageUrl = [parser parsePosterUrlFromHtml:dataSaved contentType:contentType];
     
-    
-    
+    XCTAssertNotNil(imageUrl);
     
 }
 

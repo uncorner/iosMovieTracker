@@ -49,16 +49,20 @@
 }
 
 - (NSString*) parsePosterUrlFromHtml:(NSData*)htmlData contentType:(NSString*)contentType {
-    NSLog(@"parsePosterUrl");
+    NSLog(@"parsePosterUrlFromHtml");
     
     HTMLDocument *doc = [HTMLDocument documentWithData:htmlData contentTypeHeader:contentType];
-    HTMLElement *element = [doc firstNodeMatchingSelector:@"#main_content .topic .post_wrap img.postImg"];
-    if (element != nil) {
-        NSString *url = [[element attributes] objectForKey:@"src"];
-        return url;
-    }
+    HTMLElement *varElement = [doc firstNodeMatchingSelector:@"#main_content_wrap .post_body var.postImg"];
     
-    return nil;
+    //NSArray<HTMLElement*> *elements = [varElement childElementNodes];
+    //[varElement firstNodeMatchingSelector:@"img"];
+    
+    //    if (imgElement != nil) {
+    //        NSString *url = [[imgElement attributes] objectForKey:@"src"];
+    //        return url;
+    //    }
+    
+    return [[varElement attributes] objectForKey:@"title"];
 }
 
 
