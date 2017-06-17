@@ -20,7 +20,6 @@
 		92EBA2911ED5B0350008280C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92EBA28F1ED5B0350008280C /* Main.storyboard */; };
 		92EBA2931ED5B0350008280C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92EBA2921ED5B0350008280C /* Assets.xcassets */; };
 		92EBA2961ED5B0350008280C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92EBA2941ED5B0350008280C /* LaunchScreen.storyboard */; };
-		92EBA2A11ED5B0360008280C /* RutrackerFilmsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 92EBA2A01ED5B0360008280C /* RutrackerFilmsTests.m */; };
 		92EBA2AD1ED5BE670008280C /* MainTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92EBA2AC1ED5BE660008280C /* MainTableViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -134,7 +133,6 @@
 		92EBA2951ED5B0350008280C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		92EBA2971ED5B0350008280C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		92EBA29C1ED5B0360008280C /* RutrackerFilmsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RutrackerFilmsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		92EBA2A01ED5B0360008280C /* RutrackerFilmsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RutrackerFilmsTests.m; sourceTree = "<group>"; };
 		92EBA2A21ED5B0360008280C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		92EBA2AB1ED5BE660008280C /* MainTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTableViewController.h; sourceTree = "<group>"; };
 		92EBA2AC1ED5BE660008280C /* MainTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTableViewController.m; sourceTree = "<group>"; };
@@ -242,7 +240,6 @@
 		92EBA29F1ED5B0360008280C /* RutrackerFilmsTests */ = {
 			isa = PBXGroup;
 			children = (
-				92EBA2A01ED5B0360008280C /* RutrackerFilmsTests.m */,
 				92EBA2A21ED5B0360008280C /* Info.plist */,
 				929F7D981EF2FFDF005A8787 /* ContentParserTests.m */,
 			);
@@ -454,7 +451,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				929F7D991EF2FFDF005A8787 /* ContentParserTests.m in Sources */,
-				92EBA2A11ED5B0360008280C /* RutrackerFilmsTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

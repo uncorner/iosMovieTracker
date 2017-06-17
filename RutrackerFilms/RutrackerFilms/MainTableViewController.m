@@ -17,6 +17,9 @@
 @interface MainTableViewController ()
 {
     NSMutableArray<FilmInfo*> *arrayFilms;
+    
+    NSString *contentType;
+    NSData *dataSaved;
 }
 
 
@@ -143,9 +146,10 @@
         cell.authorLabel.text = [NSString stringWithFormat:@"[%@]", filmInfo.torrentAuthor];
         cell.posterImage.hidden = NO;
         
-        UIImage *image = [UIImage imageNamed: @"no_poster.png"];
-        cell.posterImage.image = image;
-        
+        //UIImage *image = [UIImage imageNamed: @"no_poster.png"];
+        //cell.posterImage.image = image;
+        NSData *imageData = [self loadImageDataByUrl:filmInfo.relativeUrl];
+        cell.posterImage.image = [UIImage imageWithData: imageData];
     }
     else {
         cell.authorLabel.text = nil;
@@ -156,6 +160,68 @@
     
     return cell;
 }
+
+- (NSData*) loadImageDataByUrl: (NSString*) pageUrlPart {
+    
+    [self makeRequestWithUrl:pageUrlPart];
+    ContentParser *parser = [[ContentParser alloc] init];
+    NSString* imageUrl = [parser parsePosterUrlFromHtml:dataSaved contentType:contentType];
+    
+    
+    //NSData * imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: @"http://myurl/mypic.jpg"]];
+    //cell.image = [UIImage imageWithData: imageData];
+    //[imageData release];
+    
+    NSData *imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: imageUrl]];
+    return imageData;
+}
+
+
+- (void) makeRequestWithUrl: (NSString*)urlPart {
+    NSMutableString *stringUrl = [NSMutableString stringWithString:WebsiteUrl];
+    [stringUrl appendString:@"/"];
+    [stringUrl appendString:urlPart];
+    
+    NSURL *url = [NSURL URLWithString:stringUrl];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"GET"];
+    
+    [request setValue:@"UTF-8" forHTTPHeaderField:@"Accept-Charset" ];
+    [request setValue:@"ru-RU" forHTTPHeaderField:@"Content-Language"];
+    [request setValue:@"UTF-8" forHTTPHeaderField:@"Charset"];
+    [request setValue:@"application/x-www-form-urlencoded charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    
+    
+    //NSData *dataSaved = nil;
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
+                                      {
+                                          
+                                          
+                                          contentType = nil;
+                                          if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+                                              NSDictionary *headers = [(NSHTTPURLResponse *)response allHeaderFields];
+                                              contentType = headers[@"Content-Type"];
+                                          }
+                                          
+                                          
+                                          //dataSaved = data;
+                                          dataSaved = [NSData dataWithData:data];
+                                          
+                                          //
+                                          //                                          ContentParser *parser = [[ContentParser alloc]init];
+                                          //                                          NSMutableArray<FilmInfo*>* filmInfoItems = [parser parseFilmListFromHtml:data contentType:contentType];
+                                          
+                                          dispatch_semaphore_signal(semaphore);
+                                      }];
+    
+    [dataTask resume];
+    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+    
+}
+
 
 /*
 (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
