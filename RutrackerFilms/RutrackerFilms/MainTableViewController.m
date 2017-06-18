@@ -17,9 +17,6 @@
 @interface MainTableViewController ()
 {
     NSMutableArray<FilmInfo*> *arrayFilms;
-    
-//    NSString *contentType;
-//    NSData *dataSaved;
 }
 
 
@@ -145,13 +142,20 @@
     if (! filmInfo.isServiceMessage) {
         cell.authorLabel.text = [NSString stringWithFormat:@"[%@]", filmInfo.torrentAuthor];
         cell.posterImage.hidden = NO;
-        UIImage *image = [UIImage imageNamed: @"no_poster.png"];
-        cell.posterImage.image = image;
         
-        //NSData *imageData = [self loadImageDataByUrl:filmInfo.relativeUrl];
-        //cell.posterImage.image = [UIImage imageWithData: imageData];
-        //[self loadImageDataByUrl:filmInfo.relativeUrl];
-        [self makeRequestWithUrl:filmInfo.relativeUrl indexPath:indexPath];
+        if (filmInfo.posterImageData == nil) {
+            UIImage *image = [UIImage imageNamed: @"no_poster.png"];
+            cell.posterImage.image = image;
+            
+            //NSData *imageData = [self loadImageDataByUrl:filmInfo.relativeUrl];
+            //cell.posterImage.image = [UIImage imageWithData: imageData];
+            //[self loadImageDataByUrl:filmInfo.relativeUrl];
+            [self loadImageDataByUrl:filmInfo.relativeUrl indexPath:indexPath];
+        }
+        else {
+            cell.posterImage.image = [UIImage imageWithData: filmInfo.posterImageData];
+        }
+        
     }
     else {
         cell.authorLabel.text = nil;
@@ -176,7 +180,7 @@
 }
 */
 
-- (void) makeRequestWithUrl: (NSString*)urlPart indexPath: (NSIndexPath*)indexPath  {
+- (void) loadImageDataByUrl: (NSString*)urlPart indexPath: (NSIndexPath*)indexPath  {
     NSMutableString *stringUrl = [NSMutableString stringWithString:WebsiteUrl];
     [stringUrl appendString:@"/"];
     [stringUrl appendString:urlPart];
@@ -192,6 +196,8 @@
     
     NSURLSession *session = [NSURLSession sharedSession];
     
+    //FilmInfo *filmInfo = [arrayFilms objectAtIndex:indexPath.row];
+    //if (filmInfo.posterImageData == nil) {
     
     //NSData *dataSaved = nil;
     //dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
@@ -214,6 +220,10 @@
                                           NSString* imageUrl = [parser parsePosterUrlFromHtml:data contentType:contentType];
                                           
                                           NSData *imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: imageUrl]];
+                                          
+                                          
+                                          
+                                          
                                           //return imageData;
                                           
                                           //dispatch_semaphore_signal(semaphore);
@@ -228,6 +238,9 @@
                                           
                                           if (imageData != nil) {
                                               dispatch_async(dispatch_get_main_queue(), ^{
+                                                  // save in cache
+                                                  FilmInfo *filmInfo = [arrayFilms objectAtIndex:indexPath.row];
+                                                  filmInfo.posterImageData = imageData;
                                                   
                                                   //static NSString *cellIdentifier = @"TorrentCell";
                                                   //FilmTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];

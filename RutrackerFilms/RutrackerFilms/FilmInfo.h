@@ -17,7 +17,7 @@
 @property (nonatomic, strong) NSString *torrentAuthor;
 @property (nonatomic, assign) BOOL isServiceMessage;
 @property (nonatomic, strong) NSString *posterUrl;
-@property (nonatomic, strong) UIImage *posterImage;
+@property (nonatomic, strong) NSData *posterImageData;
 
 + (instancetype) createWithData:(NSString*)name :(NSString*)relativeUrl :(NSString*)torrentAuthor;
 + (instancetype) createAsServiceMessage:(NSString*) message;
