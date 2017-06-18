@@ -18,8 +18,8 @@
 {
     NSMutableArray<FilmInfo*> *arrayFilms;
     
-    NSString *contentType;
-    NSData *dataSaved;
+//    NSString *contentType;
+//    NSData *dataSaved;
 }
 
 
@@ -145,39 +145,38 @@
     if (! filmInfo.isServiceMessage) {
         cell.authorLabel.text = [NSString stringWithFormat:@"[%@]", filmInfo.torrentAuthor];
         cell.posterImage.hidden = NO;
+        UIImage *image = [UIImage imageNamed: @"no_poster.png"];
+        cell.posterImage.image = image;
         
-        //UIImage *image = [UIImage imageNamed: @"no_poster.png"];
-        //cell.posterImage.image = image;
-        NSData *imageData = [self loadImageDataByUrl:filmInfo.relativeUrl];
-        cell.posterImage.image = [UIImage imageWithData: imageData];
+        //NSData *imageData = [self loadImageDataByUrl:filmInfo.relativeUrl];
+        //cell.posterImage.image = [UIImage imageWithData: imageData];
+        //[self loadImageDataByUrl:filmInfo.relativeUrl];
+        [self makeRequestWithUrl:filmInfo.relativeUrl indexPath:indexPath];
     }
     else {
         cell.authorLabel.text = nil;
         cell.posterImage.hidden = YES;
     }
     
-    //cell.imgPoster.image = [UIImage imageNamed:movie.poster];
+    
     
     return cell;
 }
 
+/*
 - (NSData*) loadImageDataByUrl: (NSString*) pageUrlPart {
     
     [self makeRequestWithUrl:pageUrlPart];
-    ContentParser *parser = [[ContentParser alloc] init];
-    NSString* imageUrl = [parser parsePosterUrlFromHtml:dataSaved contentType:contentType];
     
-    
-    //NSData * imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: @"http://myurl/mypic.jpg"]];
-    //cell.image = [UIImage imageWithData: imageData];
-    //[imageData release];
-    
-    NSData *imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: imageUrl]];
-    return imageData;
+//    ContentParser *parser = [[ContentParser alloc] init];
+//    NSString* imageUrl = [parser parsePosterUrlFromHtml:dataSaved contentType:contentType];
+//    
+//    NSData *imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: imageUrl]];
+//    return imageData;
 }
+*/
 
-
-- (void) makeRequestWithUrl: (NSString*)urlPart {
+- (void) makeRequestWithUrl: (NSString*)urlPart indexPath: (NSIndexPath*)indexPath  {
     NSMutableString *stringUrl = [NSMutableString stringWithString:WebsiteUrl];
     [stringUrl appendString:@"/"];
     [stringUrl appendString:urlPart];
@@ -195,12 +194,13 @@
     
     
     //NSData *dataSaved = nil;
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    //dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
                                       {
-                                          
-                                          
+                                          NSString *contentType;
+                                          //NSData *dataSaved;
                                           contentType = nil;
+                                          
                                           if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
                                               NSDictionary *headers = [(NSHTTPURLResponse *)response allHeaderFields];
                                               contentType = headers[@"Content-Type"];
@@ -208,18 +208,42 @@
                                           
                                           
                                           //dataSaved = data;
-                                          dataSaved = [NSData dataWithData:data];
+                                          //dataSaved = [NSData dataWithData:data];
                                           
-                                          //
-                                          //                                          ContentParser *parser = [[ContentParser alloc]init];
-                                          //                                          NSMutableArray<FilmInfo*>* filmInfoItems = [parser parseFilmListFromHtml:data contentType:contentType];
+                                          ContentParser *parser = [[ContentParser alloc] init];
+                                          NSString* imageUrl = [parser parsePosterUrlFromHtml:data contentType:contentType];
                                           
-                                          dispatch_semaphore_signal(semaphore);
+                                          NSData *imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: imageUrl]];
+                                          //return imageData;
+                                          
+                                          //dispatch_semaphore_signal(semaphore);
+                                          
+                                          //self.tableView
+                                          
+                                          //                                          dispatch_async(dispatch_get_main_queue(), ^{
+                                          //                                              MyCell *updateCell = (id)[tableView cellForRowAtIndexPath:indexPath];
+                                          //                                              if (updateCell)
+                                          //                                                  updateCell.poster.image = image;
+                                          //                                          });
+                                          
+                                          if (imageData != nil) {
+                                              dispatch_async(dispatch_get_main_queue(), ^{
+                                                  
+                                                  //static NSString *cellIdentifier = @"TorrentCell";
+                                                  //FilmTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+                                                  FilmTableViewCell *updateCell = (id)[self.tableView cellForRowAtIndexPath:indexPath];
+                                                  if (updateCell) {
+                                                      updateCell.posterImage.image = [UIImage imageWithData: imageData];
+                                                  }
+                                              });
+                                          }
+                                          
+                                          
+                                          
                                       }];
     
     [dataTask resume];
-    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
-    
+    //dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
 }
 
 
