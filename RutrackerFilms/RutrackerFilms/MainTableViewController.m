@@ -39,6 +39,7 @@
 }
 
 - (void) updateTableItems {
+    self.tableView.userInteractionEnabled = NO;
     [self setArrayByWaitMessageItem];
     [self makeRequestForLoadingItems];
 }
@@ -96,6 +97,7 @@
                                           
                                           dispatch_async(dispatch_get_main_queue(), ^{
                                               [self.tableView reloadData];
+                                              self.tableView.userInteractionEnabled = YES;
                                           });
                                           
                                           //[self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
