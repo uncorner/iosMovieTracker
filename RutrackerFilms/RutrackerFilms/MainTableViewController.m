@@ -16,7 +16,7 @@
 
 @interface MainTableViewController ()
 {
-    NSMutableArray<FilmInfo*> *arrayFilms;
+    NSMutableArray<FilmInfo*> *_filmItems;
 }
 
 
@@ -28,7 +28,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    arrayFilms = [[NSMutableArray alloc] init];
+    _filmItems = [[NSMutableArray alloc] init];
     [self updateTableItems];
     
     // Uncomment the following line to preserve selection between presentations.
@@ -45,8 +45,8 @@
 
 - (void) setArrayByWaitMessageItem {
     FilmInfo *loadingItem = [FilmInfo createAsServiceMessage:@"Data loading..."];
-    [arrayFilms removeAllObjects];
-    [arrayFilms addObject:loadingItem];
+    [_filmItems removeAllObjects];
+    [_filmItems addObject:loadingItem];
 }
 
 - (void) makeRequestForLoadingItems {
@@ -89,13 +89,15 @@
                                           
                                           NSLog(@"parseHtml has returned %lu items", (unsigned long)filmInfoItems.count);
                                           
-                                          [arrayFilms removeAllObjects];
+                                          [_filmItems removeAllObjects];
                                           //self.arrayFilms = filmInfoItems;
                                           //self.arrayFilms = [[NSMutableArray<FilmInfo*> alloc] arrayByAddingObjectsFromArray:filmInfoItems];
-                                          [arrayFilms addObjectsFromArray:filmInfoItems];
+                                          [_filmItems addObjectsFromArray:filmInfoItems];
                                           
-                                          // reload view table
-                                          [self.tableView reloadData];
+                                          dispatch_async(dispatch_get_main_queue(), ^{
+                                              [self.tableView reloadData];
+                                          });
+                                          
                                           //[self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
                                           NSLog(@"table view was updated");
                                           
@@ -127,7 +129,7 @@
 //}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return arrayFilms.count;
+    return _filmItems.count;
 }
 
 
@@ -135,7 +137,7 @@
     static NSString *cellIdentifier = @"TorrentCell";
     
     FilmTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-    FilmInfo *filmInfo = [arrayFilms objectAtIndex:indexPath.row];
+    FilmInfo *filmInfo = [_filmItems objectAtIndex:indexPath.row];
     
     cell.nameLabel.text = filmInfo.name;
     
@@ -162,23 +164,8 @@
         cell.posterImage.hidden = YES;
     }
     
-    
-    
     return cell;
 }
-
-/*
-- (NSData*) loadImageDataByUrl: (NSString*) pageUrlPart {
-    
-    [self makeRequestWithUrl:pageUrlPart];
-    
-//    ContentParser *parser = [[ContentParser alloc] init];
-//    NSString* imageUrl = [parser parsePosterUrlFromHtml:dataSaved contentType:contentType];
-//    
-//    NSData *imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: imageUrl]];
-//    return imageData;
-}
-*/
 
 - (void) loadImageDataByUrl: (NSString*)urlPart indexPath: (NSIndexPath*)indexPath  {
     NSMutableString *stringUrl = [NSMutableString stringWithString:WebsiteUrl];
@@ -196,54 +183,26 @@
     
     NSURLSession *session = [NSURLSession sharedSession];
     
-    //FilmInfo *filmInfo = [arrayFilms objectAtIndex:indexPath.row];
-    //if (filmInfo.posterImageData == nil) {
-    
-    //NSData *dataSaved = nil;
-    //dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
                                       {
-                                          NSString *contentType;
-                                          //NSData *dataSaved;
-                                          contentType = nil;
+                                          NSString *contentType = nil;
                                           
                                           if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
                                               NSDictionary *headers = [(NSHTTPURLResponse *)response allHeaderFields];
                                               contentType = headers[@"Content-Type"];
                                           }
                                           
-                                          
-                                          //dataSaved = data;
-                                          //dataSaved = [NSData dataWithData:data];
-                                          
                                           ContentParser *parser = [[ContentParser alloc] init];
                                           NSString* imageUrl = [parser parsePosterUrlFromHtml:data contentType:contentType];
                                           
                                           NSData *imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: imageUrl]];
                                           
-                                          
-                                          
-                                          
-                                          //return imageData;
-                                          
-                                          //dispatch_semaphore_signal(semaphore);
-                                          
-                                          //self.tableView
-                                          
-                                          //                                          dispatch_async(dispatch_get_main_queue(), ^{
-                                          //                                              MyCell *updateCell = (id)[tableView cellForRowAtIndexPath:indexPath];
-                                          //                                              if (updateCell)
-                                          //                                                  updateCell.poster.image = image;
-                                          //                                          });
-                                          
                                           if (imageData != nil) {
                                               dispatch_async(dispatch_get_main_queue(), ^{
                                                   // save in cache
-                                                  FilmInfo *filmInfo = [arrayFilms objectAtIndex:indexPath.row];
+                                                  FilmInfo *filmInfo = [_filmItems objectAtIndex:indexPath.row];
                                                   filmInfo.posterImageData = imageData;
                                                   
-                                                  //static NSString *cellIdentifier = @"TorrentCell";
-                                                  //FilmTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
                                                   FilmTableViewCell *updateCell = (id)[self.tableView cellForRowAtIndexPath:indexPath];
                                                   if (updateCell) {
                                                       updateCell.posterImage.image = [UIImage imageWithData: imageData];
@@ -251,39 +210,16 @@
                                               });
                                           }
                                           
-                                          
-                                          
                                       }];
     
     [dataTask resume];
-    //dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
 }
-
-
-/*
-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    UILocalNotification * notification = [self.arrayEvents objectAtIndex:indexPath.row];
-    NSDictionary * dict = notification.userInfo;
-    
-    
-    DetailViewController * detailView = [self.storyboard instantiateViewControllerWithIdentifier:@"detailView"];
-    
-    detailView.eventInfo = [dict objectForKey:@"eventInfo"];
-    detailView.eventDate = notification.fireDate;
-    detailView.isDetail = YES;
-    
-    [self.navigationController pushViewController:detailView animated:YES];
-}
- */
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    FilmInfo *filmInfo = [arrayFilms objectAtIndex:indexPath.row];
+    FilmInfo *filmInfo = [_filmItems objectAtIndex:indexPath.row];
     
     DetailViewController * detailView = [self.storyboard instantiateViewControllerWithIdentifier:@"detailView"];
     detailView.relativeUrl = filmInfo.relativeUrl;
@@ -291,9 +227,6 @@
     
     [self.navigationController pushViewController:detailView animated:YES];
 }
-
-
-
 
 
 /*

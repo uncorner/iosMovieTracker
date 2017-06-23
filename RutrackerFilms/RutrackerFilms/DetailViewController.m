@@ -45,17 +45,11 @@ NSInteger const MaxTitleLenght = 12;
     
     NSURL *url = [NSURL URLWithString:stringUrl];
     
-    //self.label1.text = url.absoluteString;
-    
     self.webView.scalesPageToFit = YES;
     self.webView.contentMode = UIViewContentModeScaleAspectFit;
     [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
 }
 
-
-//+ (NSInteger) MaxTitleLenght {
-//    return 12;
-//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
