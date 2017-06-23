@@ -52,7 +52,7 @@
     NSLog(@"parsePosterUrlFromHtml");
     
     HTMLDocument *doc = [HTMLDocument documentWithData:htmlData contentTypeHeader:contentType];
-    HTMLElement *varElement = [doc firstNodeMatchingSelector:@"#main_content_wrap .post_body var.postImg"];
+    HTMLElement *varElement = [doc firstNodeMatchingSelector:@"#main_content_wrap .post_body var.postImgAligned"];
     
     //NSArray<HTMLElement*> *elements = [varElement childElementNodes];
     //[varElement firstNodeMatchingSelector:@"img"];

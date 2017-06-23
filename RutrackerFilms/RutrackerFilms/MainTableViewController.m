@@ -198,19 +198,21 @@
                                           ContentParser *parser = [[ContentParser alloc] init];
                                           NSString* imageUrl = [parser parsePosterUrlFromHtml:data contentType:contentType];
                                           
-                                          NSData *imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: imageUrl]];
-                                          
-                                          if (imageData != nil) {
-                                              dispatch_async(dispatch_get_main_queue(), ^{
-                                                  // save in cache
-                                                  FilmInfo *filmInfo = [_filmItems objectAtIndex:indexPath.row];
-                                                  filmInfo.posterImageData = imageData;
-                                                  
-                                                  FilmTableViewCell *updateCell = (id)[self.tableView cellForRowAtIndexPath:indexPath];
-                                                  if (updateCell) {
-                                                      updateCell.posterImage.image = [UIImage imageWithData: imageData];
-                                                  }
-                                              });
+                                          if (![imageUrl isEqual: @""] && imageUrl != nil) {
+                                              NSData *imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: imageUrl]];
+                                              
+                                              if (imageData != nil) {
+                                                  dispatch_async(dispatch_get_main_queue(), ^{
+                                                      // save in cache
+                                                      FilmInfo *filmInfo = [_filmItems objectAtIndex:indexPath.row];
+                                                      filmInfo.posterImageData = imageData;
+                                                      
+                                                      FilmTableViewCell *updateCell = (id)[self.tableView cellForRowAtIndexPath:indexPath];
+                                                      if (updateCell) {
+                                                          updateCell.posterImage.image = [UIImage imageWithData: imageData];
+                                                      }
+                                                  });
+                                              }
                                           }
                                           
                                       }];
@@ -227,6 +229,9 @@
     DetailViewController * detailView = [self.storyboard instantiateViewControllerWithIdentifier:@"detailView"];
     detailView.relativeUrl = filmInfo.relativeUrl;
     detailView.name = filmInfo.name;
+    
+    // clear poster image in cache
+    filmInfo.posterImageData = nil;
     
     [self.navigationController pushViewController:detailView animated:YES];
 }
