@@ -41,7 +41,6 @@
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zx5-9G-55G">
                                             <rect key="frame" x="279" y="13" width="78" height="73.5"/>
-                                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="zx5-9G-55G" secondAttribute="height" multiplier="83:78" id="GXL-uO-ila"/>
                                             </constraints>

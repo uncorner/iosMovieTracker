@@ -142,6 +142,7 @@
     FilmInfo *filmInfo = [_filmItems objectAtIndex:indexPath.row];
     
     cell.nameLabel.text = filmInfo.name;
+    cell.posterImage.contentMode = UIViewContentModeScaleAspectFit;
     
     if (! filmInfo.isServiceMessage) {
         cell.authorLabel.text = [NSString stringWithFormat:@"[%@]", filmInfo.torrentAuthor];
